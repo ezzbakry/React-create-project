@@ -6,30 +6,30 @@ export default class Navbar extends Component{
         
         
         super()
-        this.state={
-            name:"ezz"
-        }
-        console.log("con called")
+        // this.state={
+        //     name:"ezz"
+        // }
+        // console.log("con called")
 
     }
-    componentDidMount(){
-        console.log("cdm called")
-    }
-    componentDidUpdate(){
+    // componentDidMount(){
+    //     console.log("cdm called")
+    // }
+    // componentDidUpdate(){
         
-        console.log("update")
-    }
+    //     console.log("update")
+    // }
 
-    change=()=>{
-        this.setState({name:(this.state.name=="ezz")?"ahmed":"ezz"})
+    // change=()=>{
+    //     this.setState({name:(this.state.name=="ezz")?"ahmed":"ezz"})
 
-    }
+    // }
     render(){
-        console.log("render called")
+        // console.log("render called")
         return(
         <>
-        <div>hello {this.state.name}</div>
-        <button onClick={this.change}>change</button>
+        <div>hello Navbar</div>
+        {/* <button onClick={this.change}>change</button> */}
         
         </>
         );
