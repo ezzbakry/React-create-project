@@ -21,7 +21,7 @@ export default function Productdetails(){
         getproductbyID()
     })
     return <>
-     <Card style={{width:"200px",height:"200px"}}>
+     <Card style={{width:"200px",height:"200px",marginLeft:"40px"}}>
             <Card.Img variant="top" src={product.image} />
             <Card.Body>
               <Card.Title>{product.title}</Card.Title>
