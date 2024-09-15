@@ -3,12 +3,17 @@ import { changename } from '../../Store/slices/name'
 import { changeLanguage } from '../../Store/slices/language'
 import { increaseCounter } from '../../Store/slices/counter'
 import { reduceCounter } from '../../Store/slices/counter'
+import { changebg } from "../../Store/slices/background"
+import {changecol} from"../../Store/slices/font"
 
 
 export default function Home() {
     const lang = useSelector((state) => state.language.language)
     const name = useSelector((state) => state.name.name)
     const count = useSelector((state) => state.counter.counter)
+    const bg = useSelector((state) => state.bg.bg)
+    const f=useSelector((state)=>state.fontcol.fontcol)
+
     const dispatch = useDispatch()
     const tooglename = () => {
         dispatch(changename((name == "Ezz" ? "Ahmed" : "Ezz")))
@@ -21,6 +26,10 @@ export default function Home() {
     }
     const reducecounter = () => {
         dispatch(reduceCounter())
+    }
+    const change = () => {
+        dispatch(changebg((bg == "white") ? "black" : "white"))
+        dispatch(changecol((f=="black")?'white':"black"))
     }
 
     return <>
@@ -74,7 +83,17 @@ export default function Home() {
 
             </div>
 
+
+
         </div>
+        <button
+            className="btn btn-success"
+            onClick={() => {
+                change();
+            }}
+        >
+            change bg and font color
+        </button>
 
 
 

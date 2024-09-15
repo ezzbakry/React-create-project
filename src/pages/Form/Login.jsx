@@ -1,89 +1,74 @@
 import Form from 'react-bootstrap/Form';
 import mystyle from './Login.module.css'
 import Button from 'react-bootstrap/Button';
+import { useForm } from "react-hook-form"
+
+export default function LoginLib() {
+    const { register, handleSubmit, formState: { errors } } = useForm({mode:"onChange"})
 
 
-import React, { useState } from "react";
-export default function Login() {
-    const [user, setUser] = useState({ name: "", email: "", password: "", phone: "" })
-    const [errors,setErrors]=useState({emailerr:"",passerr:""})
-    const handleValid = (event) => {
-        // let f=event.target.value
-        if (event.target.name=="name"){
-            setUser({...user,name:event.target.value})
-            console.log(user)
-        }
-
-        else if (event.target.name == "email") {
-            setUser({ ...user, email: event.target.value })
-            setErrors({...errors,emailerr:(event.target.value.length==0)?"email is required":(event.target.value.includes("@")?"":"invalid email")})
-            console.log(user)
-            
-        }
-        else if(event.target.name == "password"){
-            setUser({ ...user, password: event.target.value })
-            console.log(user)
-            
-        }
-        else{
-            setUser({ ...user, phone: event.target.value })
-            console.log(user)
-            
-        }
-        
-
+    const login = (user) => {
+        console.log(user)
     }
-    const handleSubmit=(event)=>{
-        event.preventDefault()
-        console.log(event)
-
-    }
-
 
     return <>
         <div className={mystyle.test}>
-            <Form onSubmit={(e)=>{
-                handleSubmit(e)
-            }}>
+            <Form onSubmit={handleSubmit(login)}>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1" >
                     <Form.Label>Name</Form.Label>
-                    <Form.Control onChange={(e) => {
-                        handleValid(e)
-
-                    }} name='name' value={user.name} type="text" placeholder="Enter the name" required  />
+                    <Form.Control type="text" placeholder="Enter the name" {...register("name", { required: true })} />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label>Email address</Form.Label>
-                    <Form.Control onChange={(e) => {
-                        handleValid(e)
-
-                    }} name='email' value={user.email} type="email" placeholder="name@example.com" required  />
+                    <Form.Control  className={`form-control ${(errors.email)?'border-danger shadow-none':""}`} type="email" placeholder="name@example.com" {...register('email', { required: true, pattern: /^[a-zA-Z]{3,8}[0-9]{1,3}(@)(gmail|yahoo)(.com)$/ })} />
                 </Form.Group>
-                <p className='text-danger'>{errors.emailerr}</p>
+                {errors.email && <p className='text-danger'>invalid email</p>}
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label>Password</Form.Label>
-                    <Form.Control onChange={(e) => {
-                        handleValid(e)
-
-                    }} name='password' value={user.password} type="password" placeholder="Enter the password" required  />
+                    <Form.Control className={`form-control ${errors.password?"border-danger shadow-none":""}`} type="password" placeholder="Enter the password" {...register("password", { required: true,pattern: /[._!?@=]/ })} />
                 </Form.Group>
+                {errors.password && <p className='text-danger'>required password or invalid</p>}
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label>Phone</Form.Label>
-                    <Form.Control onChange={(e) => {
-                        handleValid(e)
-
-                    }} name='phone' value={user.phone} type="number" placeholder="Enter the phone" required  />
+                    <Form.Control className={`form-control ${errors.phone?"border-danger shadow-none":""}`} type="number" placeholder="Enter the phone" {...register("phone", { required: true, pattern: /[0-9]{11}/ })} />
                 </Form.Group>
+                {errors.phone && <p className='text-danger'>invalid phone</p>}
                 <Button as="input" type="submit" value="Submit" />{' '}
 
             </Form>
 
         </div>
+        {/* <form onSubmit={handleSubmit(login)}>
+            <div className="mb-3">
+                <label htmlFor="exampleInputEmail1" className="form-label">
+                    Email address
+                </label>
+                <input type="email" className="form-control"
+                    {...register('email', { required: true, pattern: /^[a-zA-Z]{3,8}[0-9]{1,3}(@)(gmail|yahoo)(.com)$/ })}
 
+                />
+                {errors.email && <p className="text-danger">invalid email</p>}
+
+            </div>
+            <div className="mb-3">
+                <label htmlFor="exampleInputPassword1" className="form-label">
+                    Password
+                </label>
+                <input
+                    type="password"
+                    className="form-control"
+                    id="exampleInputPassword1"
+                    {...register('password', { required: true })}
+                />
+                {errors.password && <p className="text-danger">invalid Password</p>}
+            </div>
+            <button type="submit" className="btn btn-primary">
+                Submit
+            </button>
+        </form> */}
 
 
 
     </>
-
 
 }

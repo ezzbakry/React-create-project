@@ -10,7 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import About from './pages/Aboutus/Aboutus'
-// import Login from'./pages/Form/Login'
+import Login from './pages/Form/Login'
 import Home from './pages/Home/Home'
 import Contact from './pages/Contact/Contact'
 import Notfound from './pages/Notfound/Not'
@@ -45,15 +45,41 @@ function App() {
     },
     { path: "*", element: <Notfound /> }, ,
   ]);
+  const lang = useSelector((state) => state.language.language)
+  const bg = useSelector((state) => state.bg.bg)
+  const fontcol = useSelector((state) => state.fontcol.fontcol)
 
 
   return (
     <>
 
-      <Provider store={store}>
+      {/* <Provider store={store}>
           <RouterProvider router={routes}></RouterProvider>
-      </Provider>
+      </Provider> */}
+      <div dir={`${(lang == 'en') ? 'ltr' : 'rtl'}`} style={{ backgroundColor: `${(bg == "white") ? "" : "black"}`, color: `${(fontcol == "black") ? "" : "white"}`, height: "500px" }}>
 
+        <BrowserRouter >
+
+          <Header />
+          <Routes>
+            <Route index element={<Home />} />
+
+            <Route path="/about" element={<About />}>
+              <Route index element={<Values />} />
+              <Route path="vision" element={<Vision />} />
+            </Route>
+
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/login" element={<Login/>} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/productDetails/:id" element={<Productdetails />} />
+
+            <Route path="*" element={<Notfound />} />
+          </Routes>
+
+
+        </BrowserRouter>
+      </div>
 
     </>
   )
